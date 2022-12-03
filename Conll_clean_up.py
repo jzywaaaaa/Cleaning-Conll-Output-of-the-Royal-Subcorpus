@@ -8,9 +8,13 @@ import numpy as np
 
 
 ####### get files #######
+import sys
 
-subcorpus_file_loc = ''
-atf_converted_file_loc = ''
+subcorpus_file_loc = './royal_subcorpus_data/' + sys.argv[1] 
+atf_converted_file_loc = './output/' + sys.argv[1]
+
+print("Subcorpus_file: ", subcorpus_file_loc, "atf_converted_file_loc: ", atf_converted_file_loc)
+
 # store the text number (e.g., P216736) for later use
 text_number = re.findall(pattern = '.*\/([^\/]*)$', string = subcorpus_file_loc)[0][0:-6]
 
@@ -19,8 +23,17 @@ text_number = re.findall(pattern = '.*\/([^\/]*)$', string = subcorpus_file_loc)
 
 # read_conll takes in a subcorpus conll file and outputs a dataframe
 def read_conll(filepath):
-    # read in the conll file
-    data = pd.read_fwf(filepath)
+    with open(filepath) as fp:
+        idx = 0
+        while True:
+            l = fp.readline()
+            if l[0] != "#":
+                break
+            idx += 1
+        print(idx, "lines starting with #")
+        print(fp.tell())
+        # read in the conll file
+        data = pd.read_fwf(fp)
     # extract useful information from the conll file
     useful_info = data.iloc[:,0].str.split('\t')
     # prepare a clean dataframe
@@ -69,3 +82,8 @@ df = df[['ID', 'FORM', 'SEGM', 'XPOSTAG', 'HEAD', 'DEPREL', 'MISC']]
 
 
 ####### write the cleaned df to a conll file ########
+
+with open(text_number + ".conll", "w") as fp:
+    fp.write("#new_text=" + text_number + "\n")
+
+df.to_csv(text_number + '.conll', header = True, index = None, sep = '\t', mode = 'a')
