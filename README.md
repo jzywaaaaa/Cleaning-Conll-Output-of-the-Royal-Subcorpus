@@ -61,6 +61,6 @@ You should then see the cleaned up gold-standard conll files in the folder. Any 
 
 ## Caution
 
-1. The two sources of data must be names __royal_subcorpus_data__ and __royal_subcorpus_data__ respectively and put in the same working directory as Conll_clean_up.py.
+1. The two sources of data must be named __royal_subcorpus_data__ and __royal_subcorpus_data__ respectively and put in the same working directory as Conll_clean_up.py.
 2. If you want to re-run the clean up on the folder, please remove the previously generated files from your working directory first.
 3. Conll_clean_up.py is written with the assumption that the user wants to clean up a folder of files. If you only want to clean up one non-standard royal subcorpus conll file, please open the python script and use the `do_it_all(filepath)` function in it and let the input be the file path of the non-standard royal subcorpus conll file you want to clean.
