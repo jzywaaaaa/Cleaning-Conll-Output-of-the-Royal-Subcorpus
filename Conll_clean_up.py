@@ -89,6 +89,8 @@ def do_it_all(subcorpus_filepath):
     df = df.drop(columns = ['EDGE', 'POS'])
     # add the DEPREL column
     df['DEPREL'] = np.repeat('_', df.shape[0])
+    # update the HEAD column
+    df['HEAD'] = np.repeat('_', df.shape[0])
     # reorder the columns
     df = df[['ID', 'FORM', 'SEGM', 'XPOSTAG', 'HEAD', 'DEPREL', 'MISC']]
 
